@@ -1,0 +1,42 @@
+name: Build and Deploy to GitHub Pages
+
+# This workflow builds the project and publishes the static files to
+# the gh-pages branch, making them available via GitHub Pages.
+
+on:
+  push:
+    branches: [ main ]  # Run on every push to the main branch
+  workflow_dispatch:     # Allow manual runs from the Actions tab
+
+permissions:
+  contents: read       # Needed to checkout the repo
+  pages: write         # Publish to the gh-pages branch
+  id-token: write      # Required by actions/deploy-pages
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true  # Avoid parallel deploys
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4           # Fetch repository contents
+      - uses: actions/setup-node@v4         # Install Node.js and enable caching
+        with:
+          node-version: 20
+          cache: "npm"
+      - run: npm ci                         # Install dependencies from package-lock
+      - run: npm run build                  # Compile the production bundle
+      - uses: actions/upload-pages-artifact@v3  # Upload the build output for deployment
+        with:
+          path: ./dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4  # Publish the uploaded artifact to GitHub Pages

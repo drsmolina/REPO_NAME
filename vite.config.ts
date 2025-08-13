@@ -1,9 +1,9 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 
+// GitHub Pages serves the site from https://<user>.github.io/REPO_NAME,
+// so assets need this subpath prefix to resolve correctly.
 const basePath = "/REPO_NAME/";
 
 export default defineConfig({
-  plugins: [react()],
   base: basePath
 });
