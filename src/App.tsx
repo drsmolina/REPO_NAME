@@ -83,7 +83,8 @@ export default function App(){
   const [autoSeed,setAutoSeed]=useState<boolean>(()=>load(STORAGE_AUTOSEED_KEY,true));
   const [baseTemplate,setBaseTemplate]=useState<WeekData>(()=>load(STORAGE_TEMPLATE_KEY,makeDefaultTemplate()));
 
-  useEffect(()=>{ const wkKey=fmtISO(weekStart); if(!data[wkKey]){ const seeded=autoSeed?JSON.parse(JSON.stringify(baseTemplate)):makeEmptyWeek(); setData(prev=>({...prev,[wkKey]:seeded})); }},[weekStart]); // eslint-disable-line
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- only seed when the week changes
+  useEffect(()=>{ const wkKey=fmtISO(weekStart); if(!data[wkKey]){ const seeded=autoSeed?JSON.parse(JSON.stringify(baseTemplate)):makeEmptyWeek(); setData(prev=>({...prev,[wkKey]:seeded})); }},[weekStart]);
   useEffect(()=>save(STORAGE_KEY,data),[data]);
   useEffect(()=>save(STORAGE_TEMPLATE_KEY,baseTemplate),[baseTemplate]);
   useEffect(()=>save(STORAGE_AUTOSEED_KEY,autoSeed),[autoSeed]);
