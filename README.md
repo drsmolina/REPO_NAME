@@ -22,7 +22,7 @@ tailwind.config.js – Configures Tailwind to scan index.html and all .ts/.tsx f
 
 package.json – Defines scripts and dependencies (React, Tailwind, Vite, TypeScript)
 
-src/.github/workflows/deploy.yml – GitHub Actions workflow for building and deploying the static site to GitHub Pages
+.github/workflows/deploy.yml – GitHub Actions workflow for building and deploying the static site to GitHub Pages
 
 Key concepts
 Half‑hour time grid: The planner spans 05:00–23:30 in 30‑minute increments and covers seven days.
@@ -36,6 +36,13 @@ Local persistence: Planner data, template, and auto‑seed setting are stored in
 Styling: Tailwind classes are used throughout; no additional CSS frameworks.
 
 Deployment: A GitHub Actions workflow builds the project and publishes the dist/ folder to GitHub Pages.
+
+## Deploying to GitHub Pages
+
+1. **Push to GitHub** – Commit your changes and push to the `main` branch. The workflow lives under `.github/workflows/deploy.yml` and triggers automatically.
+2. **Workflow steps** – The action installs dependencies (`npm ci`), builds the production bundle (`npm run build`), and uploads the `dist/` folder.
+3. **Automatic publish** – `actions/deploy-pages` releases the uploaded artifact to the `gh-pages` branch, making the site available at `https://<username>.github.io/REPO_NAME`.
+4. **Manual deploy (optional)** – Run `npm run build` and then `npx gh-pages -d dist` to publish without GitHub Actions.
 
 Next steps for a newcomer
 React fundamentals – Understand hooks (useState, useEffect, useMemo, useRef) and JSX.
