@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const DAY_NAMES = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-function startOfWeek(date: Date){ const d=new Date(date); const day=d.getDay(); const diff=d.getDate()-day; const out=new Date(d.setDate(diff)); out.setHours(0,0,0,0); return out; }
+export function startOfWeek(date: Date){ const d=new Date(date); const day=d.getDay(); const diff=d.getDate()-day; const out=new Date(d.setDate(diff)); out.setHours(0,0,0,0); return out; }
 function fmtISO(d: Date){ return d.toISOString().slice(0,10); }
 function addDays(d: Date, n: number){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
 
